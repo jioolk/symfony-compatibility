@@ -49,7 +49,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command implem
      * @inheritDoc
      * @internal
      */
-    public final function handleSignal( int $signal )
+    public function handleSignal( int $signal, int|false $previousExitCode = 0 ): int|false
     {
         return $this->doHandleSignal($signal);
     }

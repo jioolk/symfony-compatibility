@@ -31,10 +31,7 @@ abstract class Command extends \Symfony\Component\Console\Command\Command implem
      *
      * @throws \Exception
      */
-    protected function doHandleSignal( int $signal )
-    {
-        throw new \Exception('This method shall be overridden.');
-    }
+    protected abstract function doHandleSignal( int $signal );
 
     /**
      * @return int[]
@@ -49,8 +46,10 @@ abstract class Command extends \Symfony\Component\Console\Command\Command implem
      * @return int|false
      *
      * @throws \Exception
+     * @inheritDoc
+     * @internal
      */
-    public function handleSignal( int $signal )
+    public final function handleSignal( int $signal )
     {
         return $this->doHandleSignal($signal);
     }
@@ -61,8 +60,10 @@ abstract class Command extends \Symfony\Component\Console\Command\Command implem
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return integer
+     *
+     * @internal
      */
-    protected function execute( InputInterface $input, OutputInterface $output ): int
+    protected final function execute( InputInterface $input, OutputInterface $output ): int
     {
         $this->in  = $input;
         $this->out = $output;

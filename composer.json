@@ -1,0 +1,32 @@
+{
+    "name": "jioolk/symfony-compatibility",
+    "description": "A project to handle Symfony console command compatibility across versions",
+    "type": "project",
+    "license": "MIT",
+    "homepage": "https://github.com/jioolk/symfony-compatibility",
+    "authors": [
+        {
+            "name": "Jiri Sosolik"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "symfony/console": "6.*",
+        "symfony/process": "6.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jioolk\\SymfonyCompatibility\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Jioolk\\SymfonyCompatibility\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

@@ -21,19 +21,16 @@ class ProcessFactory
      */
     public static function createProcess( string|array $command, bool $tty = false ): Process
     {
-        if ( \is_string($command) ) {
-            $p = Process::fromShellCommandline($command);
-        } else {
-            $p = new Process($command);
-        }
+        $p = new Process($command);
 
         if ( self::$IS_TTY_SUPPORTED === null ) {
-            self::$IS_TTY_SUPPORTED = Process::isTtySupported();
+            self::$IS_TTY_SUPPORTED = (bool) @\proc_open('echo 1 >/dev/null', [['file', '/dev/tty', 'r'], ['file', '/dev/tty', 'w'], ['file', '/dev/tty', 'w']], $pipes);
         }
 
         if ( $tty === true ) {
             $p->setTty(self::$IS_TTY_SUPPORTED);
         }
+
         return $p;
     }
 

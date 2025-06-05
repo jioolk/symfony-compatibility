@@ -2,11 +2,10 @@
 
 namespace Jioolk\SymfonyCompatibility;
 
-use Symfony\Component\Console\Command\SignalableCommandInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class Command extends \Symfony\Component\Console\Command\Command implements SignalableCommandInterface
+abstract class Command extends \Symfony\Component\Console\Command\Command
 {
     /**
      * @var InputInterface
@@ -27,31 +26,14 @@ abstract class Command extends \Symfony\Component\Console\Command\Command implem
 
     /**
      * @param int $signal
-     * @return int|false
+     * @return void
      *
      * @throws \Exception
-     */
-    protected abstract function doHandleSignal( int $signal );
-
-    /**
-     * @return int[]
-     */
-    public function getSubscribedSignals(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param int $signal
-     * @return int|false
-     *
-     * @throws \Exception
-     * @inheritDoc
      * @internal
      */
-    public final function handleSignal( int $signal )
+    public function handleSignal( int $signal )
     {
-        return $this->doHandleSignal($signal);
+        throw new \Exception('Signals are not supported via this mechanism, this was introduced in symfony/console:>5');
     }
 
     /**

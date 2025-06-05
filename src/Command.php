@@ -18,11 +18,22 @@ abstract class Command extends \Symfony\Component\Console\Command\Command implem
      */
     protected $out;
 
-    protected abstract function doExecute(InputInterface $input, OutputInterface $output);
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
+    protected abstract function doExecute( InputInterface $input, OutputInterface $output );
 
-    protected function doHandleSignal(int $signal)
+    /**
+     * @param int $signal
+     * @return int|false
+     *
+     * @throws \Exception
+     */
+    protected function doHandleSignal( int $signal )
     {
-        throw new \Exception("This method shall be overridden.");
+        throw new \Exception('This method shall be overridden.');
     }
 
     /**
@@ -33,9 +44,15 @@ abstract class Command extends \Symfony\Component\Console\Command\Command implem
         return [];
     }
 
-    public function handleSignal(int $signal)
+    /**
+     * @param int $signal
+     * @return int|false
+     *
+     * @throws \Exception
+     */
+    public function handleSignal( int $signal )
     {
-        $this->doHandleSignal($signal);
+        return $this->doHandleSignal($signal);
     }
 
     /**
@@ -45,9 +62,9 @@ abstract class Command extends \Symfony\Component\Console\Command\Command implem
      * @param OutputInterface $output
      * @return integer
      */
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function execute( InputInterface $input, OutputInterface $output ): int
     {
-        $this->in = $input;
+        $this->in  = $input;
         $this->out = $output;
 
         return $this->doExecute($input, $output);

@@ -16,10 +16,10 @@ class ProcessFactory
     /**
      * Creates process with given command as parameter
      *
-     * @param string|array $command
+     * @param string|mixed[] $command
      * @return Process
      */
-    public static function createProcess( $command, bool $tty = false ): Process
+    public static function createProcess( string|array $command, bool $tty = false ): Process
     {
         if ( \is_string($command) ) {
             $p = Process::fromShellCommandline($command);
@@ -43,20 +43,25 @@ class ProcessFactory
      *
      * We are very really sure we can explode any commonscript run target command safely, so we use it like this.
      *
-     * @param string|string[] $command
+     * @param string|mixed[] $command
      * @param bool $tty
      * @return Process
      *
      * @throws \Exception
      */
-    public static function createProcessNonEscaping($command, bool $tty = false ): Process {
+    public static function createProcessNonEscaping( string|array $command, bool $tty = false ): Process
+    {
         if ( \is_array($command) ) {
             return self::createProcess($command, $tty);
         }
 
         $command        = \trim($command);
         $trimmedCommand = \preg_replace('/\s+/', ' ', $command);
-        $pieces         = \explode(' ', $trimmedCommand);
+        if ( $trimmedCommand === null ) {
+            throw new \Exception('Failed to create process for: ' . \substr($command, 0, 254));
+        }
+
+        $pieces = \explode(' ', $trimmedCommand);
         foreach ( $pieces as &$piece ) {
             $piece = \trim($piece);
         }

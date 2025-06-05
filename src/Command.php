@@ -43,15 +43,15 @@ abstract class Command extends \Symfony\Component\Console\Command\Command implem
 
     /**
      * @param int $signal
-     * @return int|false
+     * @return void
      *
      * @throws \Exception
      * @inheritDoc
      * @internal
      */
-    public final function handleSignal( int $signal )
+    public final function handleSignal( int $signal ): void
     {
-        return $this->doHandleSignal($signal);
+        $this->doHandleSignal($signal);
     }
 
     /**

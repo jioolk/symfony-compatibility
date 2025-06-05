@@ -19,7 +19,7 @@ class ProcessFactory
      * @param string|mixed[] $command
      * @return Process
      */
-    public static function createProcess( string|array $command, bool $tty = false ): Process
+    public static function createProcess( $command, bool $tty = false ): Process
     {
         if ( \is_string($command) ) {
             $p = Process::fromShellCommandline($command);
@@ -49,7 +49,7 @@ class ProcessFactory
      *
      * @throws \Exception
      */
-    public static function createProcessNonEscaping( string|array $command, bool $tty = false ): Process
+    public static function createProcessNonEscaping( $command, bool $tty = false ): Process
     {
         if ( \is_array($command) ) {
             return self::createProcess($command, $tty);
